@@ -66,8 +66,30 @@ object NewDocument {
   
 /**
  * Class that holds the javascript functions for a view.
+ *
+ * - Reference:
+ * @see [[http://wiki.apache.org/couchdb/Introduction_to_CouchDB_views]]
+ * @see [[http://wiki.apache.org/couchdb/Built-In_Reduce_Functions]]
  */
-case class MapReduce(map:String, reduce:Option[String])
+case class MapReduce(map:String, reduce:Option[String]) {
+  /**
+   *
+   * @return a copy of this MapReduce with the builtin "_count" reduce
+   */
+  def withBuiltInCount() : MapReduce = copy(reduce = Some("_count"))
+
+  /**
+   *
+   * @return a copy of this MapReduce with the builtin "_sum" reduce
+   */
+  def withBuiltInSum() : MapReduce = copy(reduce = Some("_sum"))
+
+  /**
+   *
+   * @return a copy of this MapReduce with the builtin "_stats" reduce
+   */
+  def withBuiltInStats() : MapReduce = copy(reduce = Some("_stats"))
+}
 object MapReduce {
   def apply(map:String):MapReduce = MapReduce(map, None)
   def apply(map:String, reduce:String):MapReduce = MapReduce(map, Some(reduce))
